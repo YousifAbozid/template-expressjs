@@ -1,0 +1,36 @@
+{
+	"name": "template-expressjs",
+	"version": "1.0.0",
+	"description": "",
+	"homepage": "https://github.com/YousifAbozid/template-expressjs#readme",
+	"bugs": {
+		"url": "https://github.com/YousifAbozid/template-expressjs/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/YousifAbozid/template-expressjs.git"
+	},
+	"license": "MIT",
+	"author": "Yousif Abozid",
+	"type": "module",
+	"main": "src/index.js",
+	"scripts": {
+		"dev": "nodemon index.js",
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.7",
+		"express": "^5.1.0",
+		"morgan": "^1.10.0"
+	},
+	"devDependencies": {
+		"eslint": "^9.23.0",
+		"eslint-config-prettier": "^10.1.1",
+		"eslint-plugin-prettier": "^5.2.5",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.5.0",
+		"nodemon": "^3.1.9",
+		"prettier": "^3.5.3"
+	}
+}
