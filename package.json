@@ -1,7 +1,7 @@
 {
 	"name": "template-expressjs",
 	"version": "1.0.0",
-	"description": "",
+	"description": "A production-ready Express.js template",
 	"homepage": "https://github.com/YousifAbozid/template-expressjs#readme",
 	"bugs": {
 		"url": "https://github.com/YousifAbozid/template-expressjs/issues"
@@ -15,8 +15,11 @@
 	"type": "module",
 	"main": "src/index.js",
 	"scripts": {
-		"dev": "nodemon index.js",
-		"start": "node index.js"
+		"dev": "nodemon src/index.js",
+		"start": "node src/index.js",
+		"lint": "eslint .",
+		"format": "prettier --write .",
+		"test": "echo \"No tests specified\" && exit 0"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
