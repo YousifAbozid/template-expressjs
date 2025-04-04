@@ -6,6 +6,7 @@ import compression from 'compression';
 import session from 'express-session';
 import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
+import hpp from 'hpp'; // Add HPP import
 
 import { notFound, errorHandler } from './middleware/error.js';
 import { globalLimiter } from './middleware/rateLimiter.js';
@@ -24,6 +25,7 @@ app.use(compression()); // Compresses responses
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
+app.use(hpp()); // Add HPP middleware to protect against HTTP Parameter Pollution
 
 // Skip logging during tests
 if (config.env !== 'test') {
