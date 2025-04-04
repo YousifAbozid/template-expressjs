@@ -6,11 +6,7 @@ import config from './index.js'
  */
 const connectDB = async () => {
 	try {
-		const conn = await mongoose.connect(config.db.url, {
-			// These options are no longer required in newer Mongoose versions but kept for compatibility
-			useNewUrlParser: true,
-			useUnifiedTopology: true
-		})
+		const conn = await mongoose.connect(config.db.url)
 
 		console.log(`MongoDB Connected: ${conn.connection.host}`)
 	} catch (error) {
