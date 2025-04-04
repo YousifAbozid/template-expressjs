@@ -6,12 +6,14 @@ import helmet from 'helmet';
 import compression from 'compression';
 import session from 'express-session';
 import passport from 'passport';
+import swaggerUi from 'swagger-ui-express';
 
 import { notFound, errorHandler } from './middleware/error.js';
 import routes from './routes/index.js';
 import connectDB from './config/db.js';
 import './config/passport.js';
 import config from './config/index.js';
+import swaggerSpec from './config/swagger.js';
 
 // Load environment variables
 dotenv.config();
@@ -46,6 +48,16 @@ app.use(
 // Initialize Passport
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Swagger documentation
+app.use(
+  '/api/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'API Documentation',
+  })
+);
 
 // Apply routes
 app.use('/api', routes);
