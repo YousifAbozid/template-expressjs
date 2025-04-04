@@ -15,7 +15,7 @@ export default defineConfig([
     extends: ['js/recommended'],
     rules: {
       'no-unused-vars': [
-        'warn',
+        'error', // Changed from 'warn' to 'error' to make Husky fail
         {
           argsIgnorePattern: '^_', // ✅ Ignore function arguments prefixed with `_`
           varsIgnorePattern: '^_', // ✅ Ignore unused variables prefixed with `_`
