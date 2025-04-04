@@ -1,47 +1,47 @@
 {
-	"name": "template-expressjs",
-	"version": "1.0.0",
-	"description": "A production-ready Express.js template",
-	"homepage": "https://github.com/YousifAbozid/template-expressjs#readme",
-	"bugs": {
-		"url": "https://github.com/YousifAbozid/template-expressjs/issues"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/YousifAbozid/template-expressjs.git"
-	},
-	"license": "MIT",
-	"author": "Yousif Abozid",
-	"type": "module",
-	"main": "src/index.js",
-	"scripts": {
-		"dev": "nodemon src/index.js",
-		"start": "node src/index.js",
-		"format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-		"format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
-		"upgrade": "npx npm-check-updates -u && npm install"
-	},
-	"dependencies": {
-		"bcrypt": "^5.1.1",
-		"compression": "^1.8.0",
-		"cors": "^2.8.5",
-		"dotenv": "^16.4.7",
-		"express": "^5.1.0",
-		"express-session": "^1.18.1",
-		"helmet": "^8.1.0",
-		"jsonwebtoken": "^9.0.2",
-		"mongoose": "^8.13.2",
-		"morgan": "^1.10.0",
-		"passport": "^0.7.0",
-		"passport-jwt": "^4.0.1"
-	},
-	"devDependencies": {
-		"eslint": "^9.23.0",
-		"eslint-config-prettier": "^10.1.1",
-		"eslint-plugin-prettier": "^5.2.6",
-		"husky": "^9.1.7",
-		"lint-staged": "^15.5.0",
-		"nodemon": "^3.1.9",
-		"prettier": "^3.5.3"
-	}
+  "name": "template-expressjs",
+  "version": "1.0.0",
+  "description": "A production-ready Express.js template",
+  "homepage": "https://github.com/YousifAbozid/template-expressjs#readme",
+  "bugs": {
+    "url": "https://github.com/YousifAbozid/template-expressjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YousifAbozid/template-expressjs.git"
+  },
+  "license": "MIT",
+  "author": "Yousif Abozid",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "upgrade": "npx npm-check-updates -u && npm install"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.13.2",
+    "morgan": "^1.10.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
+    "eslint-plugin-prettier": "^5.2.6",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3"
+  }
 }
