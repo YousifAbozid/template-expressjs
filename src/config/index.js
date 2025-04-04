@@ -18,6 +18,11 @@ const config = {
 		expiresIn: process.env.JWT_EXPIRES_IN || '1d'
 	},
 
+	// Session config
+	session: {
+		secret: process.env.SESSION_SECRET || 'session-secret-key'
+	},
+
 	// CORS options
 	cors: {
 		origin: process.env.CORS_ORIGIN || '*'
