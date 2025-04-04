@@ -23,10 +23,11 @@
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "fix-all": "npm run lint:fix && npm run format",
     "upgrade": "npx npm-check-updates -u && npm install",
-    "prepare": "husky",
+    "prepare": "node -e \"if(process.env.NODE_ENV !== 'production') require('husky')\"",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
-    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage"
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
+    "build": "echo 'No build step required'"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
+    "@flydotio/dockerfile": "^0.7.10",
     "eslint": "^9.23.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
