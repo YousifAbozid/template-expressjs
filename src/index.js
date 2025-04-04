@@ -9,6 +9,7 @@ import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 
 import { notFound, errorHandler } from './middleware/error.js';
+import { globalLimiter } from './middleware/rateLimiter.js';
 import routes from './routes/index.js';
 import connectDB from './config/db.js';
 import './config/passport.js';
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan('dev'));
+app.use(globalLimiter); // Apply rate limiting to all requests
 
 // Session configuration
 app.use(
