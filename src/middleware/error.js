@@ -10,7 +10,7 @@ export const notFound = (req, res, next) => {
 /**
  * Global error handler
  */
-export const errorHandler = (err, req, res, next) => {
+export const errorHandler = (err, req, res, _next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
 

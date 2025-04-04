@@ -11,7 +11,7 @@ export const globalLimiter = rateLimit({
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
   message: 'Too many requests from this IP, please try again after 15 minutes',
-  skip: req => config.env === 'development', // Skip rate limiting in development
+  skip: _req => config.env === 'development', // Skip rate limiting in development
 });
 
 /**
@@ -25,5 +25,5 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   message:
     'Too many login attempts from this IP, please try again after an hour',
-  skip: req => config.env === 'development', // Skip rate limiting in development
+  skip: _req => config.env === 'development', // Skip rate limiting in development
 });
