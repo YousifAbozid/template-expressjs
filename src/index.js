@@ -15,6 +15,7 @@ import connectDB from './config/db.js';
 import './config/passport.js';
 import config from './config/index.js';
 import swaggerSpec from './config/swagger.js';
+import logger, { morganStream } from './config/logger.js';
 
 // Load environment variables
 dotenv.config();
@@ -31,7 +32,11 @@ app.use(compression()); // Compresses responses
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(morgan('dev'));
+app.use(
+  morgan(config.env === 'development' ? 'dev' : 'combined', {
+    stream: morganStream,
+  })
+);
 app.use(globalLimiter); // Apply rate limiting to all requests
 
 // Session configuration
@@ -79,10 +84,17 @@ app.use(errorHandler);
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', err => {
-  console.error('Unhandled Rejection:', err);
+  logger.error('Unhandled Rejection:', err);
   // For clean shutdown in production, consider process.exit(1)
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', err => {
+  logger.error('Uncaught Exception:', err);
+  // In production, you might want to gracefully shutdown after logging
+  // process.exit(1)
 });
