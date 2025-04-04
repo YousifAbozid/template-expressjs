@@ -4,10 +4,14 @@ import cors from 'cors'
 import morgan from 'morgan'
 import helmet from 'helmet'
 import compression from 'compression'
+import session from 'express-session'
+import passport from 'passport'
 
 import { notFound, errorHandler } from './middleware/error.js'
 import routes from './routes/index.js'
 import connectDB from './config/db.js'
+import './config/passport.js'
+import config from './config/index.js'
 
 // Load environment variables
 dotenv.config()
@@ -25,6 +29,23 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
 app.use(morgan('dev'))
+
+// Session configuration
+app.use(
+	session({
+		secret: config.session.secret,
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			secure: config.env === 'production',
+			maxAge: 24 * 60 * 60 * 1000 // 1 day
+		}
+	})
+)
+
+// Initialize Passport
+app.use(passport.initialize())
+app.use(passport.session())
 
 // Apply routes
 app.use('/api', routes)
