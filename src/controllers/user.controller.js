@@ -36,11 +36,11 @@ export const getUserById = async (req, res, next) => {
  */
 export const createUser = async (req, res, next) => {
   try {
-    const { name, email } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!name || !email) {
+    if (!name || !email || !password) {
       res.status(400);
-      return next(new Error('Name and email are required'));
+      return next(new Error('Name, email, and password are required'));
     }
 
     const userExists = await User.findOne({ email });
@@ -50,7 +50,7 @@ export const createUser = async (req, res, next) => {
       return next(new Error('User with this email already exists'));
     }
 
-    const newUser = await User.create({ name, email });
+    const newUser = await User.create({ name, email, password });
     res.status(201).json({ user: newUser });
   } catch (error) {
     next(error);
