@@ -25,5 +25,5 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   message:
     'Too many login attempts from this IP, please try again after an hour',
-  skip: req => config.env === 'development', // Skip rate limiting in development
+  skip: _req => config.env === 'development', // Skip rate limiting in development
 });
