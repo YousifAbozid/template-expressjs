@@ -2,6 +2,8 @@ import dotenv from 'dotenv'
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
+import helmet from 'helmet'
+import compression from 'compression'
 
 import { notFound, errorHandler } from './middleware/error.js'
 import routes from './routes/index.js'
@@ -17,6 +19,8 @@ connectDB()
 const app = express()
 
 // Apply middleware
+app.use(helmet()) // Adds security headers
+app.use(compression()) // Compresses responses
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors())
