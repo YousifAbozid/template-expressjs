@@ -5,9 +5,13 @@ import morgan from 'morgan'
 
 import { notFound, errorHandler } from './middleware/error.js'
 import routes from './routes/index.js'
+import connectDB from './config/db.js'
 
 // Load environment variables
 dotenv.config()
+
+// Connect to MongoDB
+connectDB()
 
 // Initialize express app
 const app = express()
