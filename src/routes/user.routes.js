@@ -6,6 +6,7 @@ import {
   updateUser,
   deleteUser,
 } from '../controllers/user.controller.js';
+import { userValidation } from '../middleware/validator.js';
 
 const router = express.Router();
 
@@ -99,7 +100,7 @@ router.get('/', getUsers);
  *       500:
  *         description: Server error
  */
-router.get('/:id', getUserById);
+router.get('/:id', userValidation.getUserById, getUserById);
 
 /**
  * @swagger
@@ -132,7 +133,7 @@ router.get('/:id', getUserById);
  *       500:
  *         description: Server error
  */
-router.post('/', createUser);
+router.post('/', userValidation.createUser, createUser);
 
 /**
  * @swagger
@@ -166,7 +167,7 @@ router.post('/', createUser);
  *       500:
  *         description: Server error
  */
-router.put('/:id', updateUser);
+router.put('/:id', userValidation.updateUser, updateUser);
 
 /**
  * @swagger
@@ -189,6 +190,6 @@ router.put('/:id', updateUser);
  *       500:
  *         description: Server error
  */
-router.delete('/:id', deleteUser);
+router.delete('/:id', userValidation.getUserById, deleteUser);
 
 export default router;
