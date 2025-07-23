@@ -31,9 +31,6 @@ jobs:
           npm install
           npm audit fix --force || true
 
-      - name: 🚦 Run build/dev to verify
-        run: npm run build || npm run dev || true
-
       - name: 🧠 Commit and Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
