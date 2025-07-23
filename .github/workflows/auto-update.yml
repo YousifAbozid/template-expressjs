@@ -2,7 +2,7 @@ name: 🔄 Auto Dependency Updater
 
 on:
   schedule:
-    - cron: '0 3 * * *' # every day at 3AM UTC (adjust as needed)
+    - cron: '0 0 * * 0' # every sunday at 12:00 AM UTC (adjust as needed)
   workflow_dispatch: # allow manual trigger from Actions tab
 
 permissions:
