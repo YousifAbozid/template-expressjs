@@ -34,11 +34,6 @@ jobs:
       - name: 🚦 Run build/dev to verify
         run: npm run build || npm run dev || true
 
-      - name: 🐛 Debug Git Remote
-        run: |
-          git remote -v
-          git status
-
       - name: 🧠 Commit and Push changes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
