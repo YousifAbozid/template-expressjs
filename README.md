@@ -2,7 +2,7 @@
 
 A modern, production-ready Express.js template with TypeScript, decorator-based OpenAPI/Swagger documentation, and comprehensive validation.
 
-## 📑 Table of Contents
+## 📋 Table of Contents
 
 | Section                                               | Description                      |
 | ----------------------------------------------------- | -------------------------------- |
@@ -22,6 +22,8 @@ A modern, production-ready Express.js template with TypeScript, decorator-based 
 
 ## ✨ Features
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 - 🏗️ **Express.js with TypeScript** - Type-safe backend development
 - 📚 **OpenAPI 3.0 / Swagger** - Automatic API documentation generation
 - 🎨 **Decorator-based Architecture** - Clean, NestJS-inspired patterns
@@ -33,9 +35,9 @@ A modern, production-ready Express.js template with TypeScript, decorator-based 
 - 📦 **ES Modules** - Modern JavaScript module system
 - 🔧 **Developer Tools** - Hot reload, validation, type generation
 
-[↑ Back to Table of Contents](#-table-of-contents)
-
 ## 🚀 Quick Start
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ```bash
 # Install dependencies
@@ -48,9 +50,9 @@ npm run dev
 open http://localhost:3001/api/docs
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
-
 ## 📁 Project Structure
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ```
 src/
@@ -63,12 +65,12 @@ src/
 ├── swagger/        # OpenAPI specification generation
 ├── config/         # Configuration files (DB, Swagger)
 ├── utils/          # Utility functions
-└── types/          # TypeScript type definitions
+└── types/          # Generated types and schemas
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
-
 ## 📋 Development Scripts
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ### Core Development
 
@@ -98,11 +100,10 @@ src/
 | `npm run api:types`    | Generate TypeScript types      | For frontend type definitions             |
 | `npm run api:client`   | Generate API client            | For frontend API client                   |
 | `npm run api:validate` | Validate API specification     | Check API spec validity                   |
-| `npm run api:docs`     | Serve API documentation        | View Swagger UI docs                      |
-
-[↑ Back to Table of Contents](#-table-of-contents)
 
 ## 🎯 Key Features Explained
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ### Decorator-Based Documentation
 
@@ -111,204 +112,261 @@ src/
 @Controller('/products')
 export class ProductController {
   @Get('/')
-  @ApiOperation({ summary: 'Get all products' })
-  @ApiOkResponse({ type: ProductPaginationResponseDto })
-  async getProducts(@Query() query: GetProductsQueryDto) {
+  @ApiOperation({
+    summary: 'Get all products',
+    description: 'Retrieve a paginated list of products',
+  })
+  @ApiOkResponse({
+    description: 'Products retrieved successfully',
+    type: PaginatedResponseDto,
+  })
+  async getProducts(query: GetProductsQueryDto): Promise<void> {
     // Implementation
   }
 }
 ```
 
-### Automatic Validation
+### Automatic Type Generation
+
+- **OpenAPI Spec**: Generated from decorators
+- **TypeScript Types**: Auto-generated from DTOs
+- **API Client**: Ready-to-use frontend client
+
+### Validation with class-validator
 
 ```typescript
 export class CreateProductDto {
-  @ApiProperty({ example: 'iPhone 15', minLength: 1, maxLength: 200 })
+  @ApiProperty({
+    description: 'Product name',
+    example: 'iPhone 15',
+    minLength: 1,
+    maxLength: 200,
+  })
   @IsString()
   @Length(1, 200)
   name: string;
 
-  @ApiProperty({ example: 999.99, minimum: 0 })
+  @ApiProperty({
+    description: 'Product price',
+    example: 999.99,
+    minimum: 0,
+  })
   @IsNumber()
   @Min(0)
   price: number;
 }
 ```
 
-### Type-Safe Responses
-
-```typescript
-export class ProductResponseDto {
-  @ApiProperty({ example: 'prod_123' })
-  id: string;
-
-  @ApiProperty({ example: 'iPhone 15' })
-  name: string;
-
-  // Automatic OpenAPI schema generation
-}
-```
-
-[↑ Back to Table of Contents](#-table-of-contents)
-
 ## 🔄 Development Workflows
 
-### Adding a New API Endpoint
-
-1. **Create your DTOs** with `@ApiProperty()` and validation decorators
-2. **Create Controller** with route and documentation decorators
-3. **Add controller to generation script**: Update `scripts/generate-openapi-spec.ts`
-4. **Run API generation**: `npm run api:generate`
-5. **Test your changes**: `npm run dev`
-6. **View API docs**: `npm run api:docs`
-
-**Example workflow:**
-
-```bash
-# After creating new routes/DTOs
-npm run api:generate    # Generates spec, types, and client
-npm run dev            # Test in development
-npm run api:docs       # View documentation
-npm run test           # Validate before commit
-```
-
-### Before Committing Code
-
-Git hooks automatically run checks, but you can run manually:
-
-```bash
-npm run fix     # Fix any issues
-npm run test    # Full validation
-git add .
-git commit -m "your message"  # Pre-commit hook runs automatically
-```
-
-### Frontend Integration
-
-After adding/modifying API endpoints:
-
-1. **Generate types for frontend**: `npm run api:types`
-2. **Copy generated types**: `src/types/api.ts` contains all TypeScript interfaces
-3. **Use API client**: `src/types/client.ts` contains API client functions
-4. **API specification**: `src/openapi.json` for other tooling
-
 [↑ Back to Table of Contents](#-table-of-contents)
+
+### Adding New Endpoints
+
+1. **Create DTOs** with validation and OpenAPI decorators
+2. **Implement Controller** with route decorators
+3. **Export middleware** for route registration
+4. **Add routes** to `src/routes/index.ts`
+5. **Generate API artifacts** with `npm run api:generate`
+
+### Typical Development Session
+
+```bash
+# Start development
+npm run dev
+
+# Make changes to controllers/DTOs
+# API documentation updates automatically
+
+# Generate types and client
+npm run api:generate
+
+# Validate everything
+npm run test
+```
 
 ## 🎨 Available Decorators
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ### Class Decorators
 
-- `@ApiTags('Products')` - Groups endpoints in Swagger UI
-- `@Controller('/products')` - Sets base path for controller
-- `@ApiBearerAuth()` - Requires authentication for entire controller
+| Decorator              | Purpose             | Example                       |
+| ---------------------- | ------------------- | ----------------------------- |
+| `@Controller('/path')` | Define route prefix | `@Controller('/users')`       |
+| `@ApiTags('Tag')`      | Group endpoints     | `@ApiTags('User Management')` |
 
 ### Method Decorators
 
-- `@Get('/')`, `@Post('/')`, `@Put('/:id')`, `@Delete('/:id')` - HTTP methods
-- `@ApiOperation({ summary, description })` - Endpoint documentation
-- `@ApiOkResponse()`, `@ApiCreatedResponse()`, `@ApiBadRequestResponse()`, etc.
+| Decorator         | Purpose         | Example            |
+| ----------------- | --------------- | ------------------ |
+| `@Get('/')`       | GET endpoint    | `@Get('/search')`  |
+| `@Post('/')`      | POST endpoint   | `@Post('/create')` |
+| `@Put('/:id')`    | PUT endpoint    | `@Put('/:id')`     |
+| `@Delete('/:id')` | DELETE endpoint | `@Delete('/:id')`  |
+
+### Documentation Decorators
+
+| Decorator                  | Purpose              | Example                                      |
+| -------------------------- | -------------------- | -------------------------------------------- |
+| `@ApiOperation()`          | Endpoint description | `@ApiOperation({ summary: 'Get users' })`    |
+| `@ApiOkResponse()`         | 200 response         | `@ApiOkResponse({ type: UserDto })`          |
+| `@ApiCreatedResponse()`    | 201 response         | `@ApiCreatedResponse({ type: UserDto })`     |
+| `@ApiBadRequestResponse()` | 400 response         | `@ApiBadRequestResponse({ type: ErrorDto })` |
+| `@ApiNotFoundResponse()`   | 404 response         | `@ApiNotFoundResponse()`                     |
 
 ### Property Decorators
 
-- `@ApiProperty({ description, example, type })` - Required property
-- `@ApiPropertyOptional({ description, example, type })` - Optional property
-- `@ApiPropertyArray(ItemType)` - Array properties
-
-### Validation Decorators
-
-- `@IsString()`, `@IsNumber()`, `@IsEmail()`, `@IsEnum()`
-- `@IsOptional()`, `@Length(min, max)`, `@Min()`, `@Max()`
-- `@Transform()`, `@Type()` - Data transformation
-
-[↑ Back to Table of Contents](#-table-of-contents)
+| Decorator                | Purpose           | Example                                  |
+| ------------------------ | ----------------- | ---------------------------------------- |
+| `@ApiProperty()`         | Required property | `@ApiProperty({ example: 'John' })`      |
+| `@ApiPropertyOptional()` | Optional property | `@ApiPropertyOptional({ type: String })` |
 
 ## 🔧 Generated Files
 
-These files are automatically generated and should not be edited manually:
-
-- `src/openapi.json` - OpenAPI specification
-- `src/types/api.ts` - TypeScript type definitions
-- `src/types/client.ts` - API client functions
-
 [↑ Back to Table of Contents](#-table-of-contents)
+
+> **⚠️ Never edit generated files manually - they are overwritten on each build**
+
+| File                  | Purpose                     | Generated By         |
+| --------------------- | --------------------------- | -------------------- |
+| `src/openapi.json`    | OpenAPI 3.0 specification   | `npm run api:spec`   |
+| `src/types/api.ts`    | TypeScript type definitions | `npm run api:types`  |
+| `src/types/client.ts` | API client functions        | `npm run api:client` |
 
 ## ⚠️ Important Notes
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ### ES Modules with .js Extensions
 
-All imports use `.js` extensions for ES module compatibility:
+All imports must use `.js` extensions even for TypeScript files:
 
 ```typescript
-import { ApiProperty } from '@/decorators/index.js';
+import { ApiProperty } from '@/decorators/index.js'; // ✅ Correct
+import { ApiProperty } from '@/decorators/index'; // ❌ Wrong
 ```
 
-### Common Gotchas
+### Controller Pattern
 
-- Controllers must be added to `scripts/generate-openapi-spec.ts` controllers array
-- DTOs need both `@ApiProperty()` and validation decorators (`@IsString()`, etc.)
-- Use `@Type(() => Number)` for query parameter type conversion
-- Always export new controllers/DTOs in their respective index.ts files
-- **Always run `npm run api:generate`** after creating or modifying routes/DTOs
+Controllers must export middleware arrays for route registration:
 
-### Development Tools
+```typescript
+export const userRoutes = {
+  getUsers: [
+    ValidateQuery(GetUsersQueryDto),
+    async (req: Request, res: Response, next: NextFunction) => {
+      const controller = new UserController();
+      await controller.getUsers(req.query as any, req, res, next);
+    },
+  ],
+};
+```
 
-- **ESLint**: Code quality rules (warnings expected for template's `any` types)
-- **Prettier**: Code formatting (runs separately from ESLint)
-- **Husky**: Git hooks for automated checks
-- **lint-staged**: Run tools only on staged files
+### DTO Validation Pattern
 
-[↑ Back to Table of Contents](#-table-of-contents)
+Always combine OpenAPI documentation with class-validator:
+
+```typescript
+@ApiProperty({ example: 'john@example.com', format: 'email' })
+@IsEmail({}, { message: 'Must be a valid email' })
+@Transform(({ value }) => value?.toLowerCase()?.trim())
+email: string;
+```
 
 ## 🔒 Security Features
 
-- **Helmet.js** - Security headers
-- **CORS** - Cross-origin resource sharing
-- **Rate Limiting** - Request throttling
-- **JWT Authentication** - Secure token-based auth
-- **Input Validation** - Comprehensive request validation
-- **Error Handling** - Safe error responses
-
 [↑ Back to Table of Contents](#-table-of-contents)
+
+- **Rate Limiting** - Configurable per-endpoint limits
+- **CORS Protection** - Cross-origin request security
+- **Helmet Security Headers** - Essential HTTP headers
+- **Input Validation** - Request sanitization
+- **JWT Authentication** - Token-based auth
+- **Error Handling** - Secure error responses
 
 ## 🌐 API Documentation
 
-The template automatically generates beautiful, interactive API documentation accessible at `/api/docs` when the server is running. Features include:
-
-- **Interactive testing** - Test endpoints directly from the browser
-- **Schema visualization** - See request/response structures
-- **Authentication support** - Test protected endpoints
-- **Example values** - Real examples for all fields
-- **Export options** - Download OpenAPI spec
-
 [↑ Back to Table of Contents](#-table-of-contents)
+
+Interactive Swagger UI is available at:
+
+- **Development**: http://localhost:3001/api-docs
+- **Production**: Your deployed domain + `/api-docs`
+
+Features:
+
+- Try endpoints directly in browser
+- View request/response schemas
+- Download OpenAPI specification
+- Generate client code
 
 ## ✅ Best Practices
 
-1. **Always use validation decorators** on DTOs for type safety
-2. **Include examples** in `@ApiProperty` for better documentation
-3. **Use enum types** for fixed value sets
-4. **Apply consistent error handling** with standard HTTP status codes
-5. **Follow RESTful naming conventions** for endpoints
-6. **Add security decorators** (`@ApiBearerAuth()`) for protected routes
-7. **Use pagination** for list endpoints
-8. **Implement comprehensive response documentation** with `@ApiResponse`
-9. **Test endpoints** after implementation
-10. **Run `npm run api:generate`** after any route/DTO changes
-
 [↑ Back to Table of Contents](#-table-of-contents)
+
+### DTO Design
+
+- Use descriptive property names
+- Include examples in `@ApiProperty`
+- Combine validation with documentation
+- Use enums for constrained values
+
+### Controller Implementation
+
+- Keep controllers thin - business logic in services
+- Use proper HTTP status codes
+- Handle errors gracefully
+- Document all possible responses
+
+### Type Safety
+
+- Never use `any` type
+- Leverage generated types
+- Use proper TypeScript configurations
+- Validate inputs and outputs
+
+### API Design
+
+- Follow RESTful conventions
+- Use consistent naming
+- Implement proper pagination
+- Version your APIs appropriately
 
 ## 💡 Why This Template?
 
-This template bridges the gap between Express.js simplicity and NestJS power by providing:
+[↑ Back to Table of Contents](#-table-of-contents)
 
-1. **Familiar Express patterns** with enhanced developer experience
-2. **Automatic documentation** that stays in sync with your code
-3. **Type safety** throughout the request/response cycle
-4. **Industry best practices** built-in from day one
-5. **Scalable architecture** that grows with your application
+### 🎯 Developer Experience
 
-Perfect for building APIs that need to be well-documented, type-safe, and maintainable!
+- **Single Source of Truth**: Decorators generate docs, types, and validation
+- **Type Safety**: End-to-end TypeScript with generated types
+- **Hot Reload**: Instant feedback during development
+- **Auto-completion**: Generated client provides IDE support
+
+### 📚 Production Ready
+
+- **Comprehensive Documentation**: Always up-to-date with code
+- **Input Validation**: Automatic request/response validation
+- **Security**: Built-in security best practices
+- **Performance**: Rate limiting and optimized middleware
+
+### 🔄 Maintainable
+
+- **Consistent Patterns**: Clear conventions for adding features
+- **Generated Code**: Reduces boilerplate and errors
+- **Quality Gates**: Automated linting, formatting, and type checking
+- **Modern Stack**: ES modules, latest TypeScript features
+
+### 🚀 Scalable
+
+- **Modular Architecture**: Easy to extend and modify
+- **Database Agnostic**: Bring your own database solution
+- **Deployment Ready**: Production build and configuration
+- **Team Friendly**: Clear patterns for collaboration
 
 ---
 
-**Ready to build amazing APIs?** Start implementing your features with the decorator patterns above! 🎯
+**Ready to build amazing APIs?** 🎉
+
+Start with `npm install && npm run dev` and visit http://localhost:3001/api-docs to explore your API!
