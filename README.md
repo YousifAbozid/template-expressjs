@@ -4,19 +4,21 @@ A modern, production-ready Express.js template with TypeScript, decorator-based 
 
 ## 📑 Table of Contents
 
-- [✨ Features](#-features)
-- [🚀 Quick Start](#-quick-start)
-- [📁 Project Structure](#-project-structure)
-- [📋 Development Scripts](#-development-scripts)
-- [🎯 Key Features Explained](#-key-features-explained)
-- [🔄 Development Workflows](#-development-workflows)
-- [🎨 Available Decorators](#-available-decorators)
-- [🔧 Generated Files](#-generated-files)
-- [⚠️ Important Notes](#️-important-notes)
-- [🔒 Security Features](#-security-features)
-- [🌐 API Documentation](#-api-documentation)
-- [✅ Best Practices](#-best-practices)
-- [💡 Why This Template?](#-why-this-template)
+| Section                                               | Description                      |
+| ----------------------------------------------------- | -------------------------------- |
+| [✨ Features](#-features)                             | Core capabilities and tech stack |
+| [🚀 Quick Start](#-quick-start)                       | Installation and setup           |
+| [📁 Project Structure](#-project-structure)           | File organization                |
+| [📋 Development Scripts](#-development-scripts)       | Development commands             |
+| [🎯 Key Features Explained](#-key-features-explained) | Decorator patterns and examples  |
+| [🔄 Development Workflows](#-development-workflows)   | Adding endpoints and workflows   |
+| [🎨 Available Decorators](#-available-decorators)     | Complete decorator reference     |
+| [🔧 Generated Files](#-generated-files)               | Auto-generated file overview     |
+| [⚠️ Important Notes](#️-important-notes)               | Critical conventions and gotchas |
+| [🔒 Security Features](#-security-features)           | Built-in security capabilities   |
+| [🌐 API Documentation](#-api-documentation)           | Interactive docs and testing     |
+| [✅ Best Practices](#-best-practices)                 | Implementation guidelines        |
+| [💡 Why This Template?](#-why-this-template)          | Value proposition and benefits   |
 
 ## ✨ Features
 
