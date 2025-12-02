@@ -72,6 +72,12 @@ app.use(
   })
 );
 
+// API documentation JSON endpoint
+app.get('/api/docs.json', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.json(swaggerSpec);
+});
+
 // API routes
 app.use('/api', routes);
 

@@ -25,6 +25,7 @@ export interface ValidationError {
 
 export interface ApiError extends Error {
   statusCode?: number;
+  code?: string;
   isOperational?: boolean;
   errors?: ValidationError[];
 }

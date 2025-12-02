@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { config } from 'dotenv';
 import connectDB from '@/config/db.js';
 import app from '@/app.js';
@@ -14,6 +15,7 @@ const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📚 API Documentation: http://localhost:${PORT}/api/docs`);
   console.log(`💓 Health Check: http://localhost:${PORT}/api/health`);
+  console.log(`🔄 User Management: http://localhost:${PORT}/api/users`);
 });
 
 // Graceful shutdown

@@ -22,6 +22,8 @@
     "removeComments": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
     "baseUrl": "./",
     "paths": {
@@ -30,7 +32,12 @@
       "@/config/*": ["src/config/*"],
       "@/middleware/*": ["src/middleware/*"],
       "@/routes/*": ["src/routes/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/utils/*": ["src/utils/*"],
+      "@/decorators/*": ["src/decorators/*"],
+      "@/dto/*": ["src/dto/*"],
+      "@/controllers/*": ["src/controllers/*"],
+      "@/enums/*": ["src/enums/*"],
+      "@/swagger/*": ["src/swagger/*"]
     }
   },
   "include": ["src/**/*"],

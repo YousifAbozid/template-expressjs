@@ -8,10 +8,21 @@ export default [
     ignores: [
       'node_modules/**',
       'dist/**',
+      'build/**',
       '.eslintcache',
       'eslint.config.js',
       '**/*.config.js',
       '.husky/**',
+      // Generated files
+      'src/openapi.json',
+      'src/types/api.ts',
+      'src/types/client.ts',
+      // Logs and temporary files
+      '*.log',
+      '.env*',
+      // Cache directories
+      '.cache/**',
+      'coverage/**',
     ],
   },
 
@@ -63,7 +74,7 @@ export default [
       // Disable base rule and use TypeScript version
       'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': [
-        'warn',
+        'off',
         {
           argsIgnorePattern: '^_',
           varsIgnorePattern: '^_',
@@ -74,7 +85,7 @@ export default [
       // TypeScript specific rules
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off', // Allow any in template code
       '@typescript-eslint/no-unused-expressions': 'off',
 
       // General rules

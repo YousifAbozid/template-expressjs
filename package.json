@@ -17,22 +17,31 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
-    "build": "tsc",
+    "build": "tsc && npm run generate:api-spec",
     "build:watch": "tsc --watch",
     "type-check": "tsc --noEmit",
-    "generate:types": "openapi-typescript ./src/config/swagger.ts --output ./src/types/api.ts",
-    "generate:client": "swagger-typescript-api -p ./src/config/swagger.ts -o ./src/types -n client.ts",
-    "lint": "eslint src --cache --cache-location .eslintcache",
+    "generate:api-spec": "tsx scripts/generate-openapi-spec.ts",
+    "generate:types": "openapi-typescript ./src/openapi.json --output ./src/types/api.ts",
+    "generate:client": "swagger-typescript-api generate -p ./src/openapi.json -o ./src/types -n client.ts --no-client",
+    "validate:api-spec": "tsx scripts/validate-openapi-spec.ts",
+    "docs:serve": "swagger-ui-serve ./src/openapi.json",
+    "lint": "eslint src --cache --cache-location .eslintcache --no-warn-ignored",
     "lint:fix": "eslint src --fix --cache --cache-location .eslintcache",
     "format:all": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "fix-all": "npm run lint:fix && npm run format:all",
     "fix-staged": "lint-staged",
+    "check-formatting": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md,yml,yaml}\"",
+    "validate-config": "npm run check-formatting && npm run lint && npm run type-check",
     "upgrade": "npx npm-check-updates -u && npm install",
     "prepare": "husky",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "api:generate-all": "npm run generate:api-spec && npm run generate:types && npm run generate:client",
+    "api:validate-all": "npm run validate:api-spec && npm run type-check"
   },
   "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.3",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
@@ -43,8 +52,10 @@
     "helmet": "^8.1.0",
     "hpp": "^0.2.3",
     "mongoose": "^9.0.0",
+    "reflect-metadata": "^0.2.2",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1"
+    "swagger-ui-express": "^5.0.1",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@apidevtools/swagger-parser": "^12.1.0",
@@ -58,6 +69,7 @@
     "@types/helmet": "^0.0.48",
     "@types/hpp": "^0.2.7",
     "@types/node": "^24.10.1",
+    "@types/reflect-metadata": "^0.0.5",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
@@ -78,10 +90,13 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix --cache --cache-location .eslintcache",
+      "eslint --fix --cache --cache-location .eslintcache --no-warn-ignored",
       "prettier --write"
     ],
-    "*.{json,md}": [
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ],
+    "*.{css,scss,less}": [
       "prettier --write"
     ]
   }

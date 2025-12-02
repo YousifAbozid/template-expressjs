@@ -41,4 +41,7 @@ router.get('/health', (req: Request, res: Response): void => {
   res.status(200).json(response);
 });
 
+// Example routes will be added here following the established patterns
+// See IMPLEMENTATION_GUIDE.md for adding new routes
+
 export default router;
