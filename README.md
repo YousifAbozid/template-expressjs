@@ -16,9 +16,6 @@ A fully-featured, production-ready Express.js template with modern development t
   - Express session support
 - **Performance**
   - Compression middleware
-- **Logging**
-  - Request logging with Morgan
-  - Application logging with Winston
 - **Developer Experience**
   - Hot reloading with Nodemon
   - ESLint and Prettier integration
@@ -40,7 +37,6 @@ template-expressjs/
 │   ├── routes/         # Route definitions
 │   ├── app.js          # Express app setup
 │   └── index.js        # Application entry point
-├── logs/               # Application logs (in production)
 ├── coverage/           # Test coverage reports
 └── tests/              # Test files
 ```

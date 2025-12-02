@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import morgan from 'morgan';
 import helmet from 'helmet';
 import compression from 'compression';
 import session from 'express-session';
@@ -14,7 +13,6 @@ import routes from './routes/index.js';
 import './config/passport.js';
 import config from './config/index.js';
 import swaggerSpec from './config/swagger.js';
-import { morganStream } from './config/logger.js';
 
 // Initialize express app
 const app = express();
@@ -26,15 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(hpp()); // Add HPP middleware to protect against HTTP Parameter Pollution
-
-// Skip logging during tests
-if (config.env !== 'test') {
-  app.use(
-    morgan(config.env === 'development' ? 'dev' : 'combined', {
-      stream: morganStream,
-    })
-  );
-}
 
 app.use(globalLimiter); // Apply rate limiting to all requests
 
