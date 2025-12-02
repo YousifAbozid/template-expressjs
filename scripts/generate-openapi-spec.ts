@@ -1,10 +1,15 @@
 #!/usr/bin/env node
 
+import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { generateOpenApiSpec } from '../src/swagger/index.js';
-// Import your controllers here
+
+// Load environment variables
+dotenv.config();
+
+import swaggerConfig from '../src/config/swagger.js';
+// Import your controllers here if you have any
 // Example: import { UserController } from '../src/controllers/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -14,12 +19,8 @@ async function generateSpec() {
   try {
     console.log('🚀 Generating OpenAPI specification...');
 
-    // List of controllers to process
-    const controllers: any[] = []; // Add your controllers here
-    // Example: const controllers = [UserController, ProductController];
-
-    // Generate the OpenAPI specification
-    const spec = generateOpenApiSpec(controllers);
+    // Use the merged swagger configuration
+    const spec = swaggerConfig;
 
     // Ensure the output directory exists
     const outputDir = path.join(__dirname, '..', 'dist');
@@ -47,7 +48,7 @@ async function generateSpec() {
     console.log(`📊 Statistics:`);
     console.log(`   - ${pathCount} API paths`);
     console.log(`   - ${schemaCount} schema definitions`);
-    console.log(`   - ${controllers.length} controllers processed`);
+    console.log(`   - Using JSDoc + Decorators for API documentation`);
   } catch (error) {
     console.error('❌ Error generating OpenAPI specification:', error);
     process.exit(1);

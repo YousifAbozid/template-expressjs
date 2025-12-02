@@ -1,7 +1,11 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import type { Options } from 'swagger-jsdoc';
+import dotenv from 'dotenv';
 import { CommonSchemas } from '@/types/schemas.js';
 import { generateOpenApiSpec } from '@/swagger/index.js';
+
+// Load environment variables
+dotenv.config();
 
 const options: Options = {
   definition: {
@@ -19,8 +23,14 @@ const options: Options = {
     },
     servers: [
       {
-        url: process.env.API_URL || 'http://localhost:5000',
-        description: 'Development server',
+        url:
+          process.env.NODE_ENV === 'production'
+            ? process.env.API_URL || 'https://api.example.com'
+            : `http://localhost:${process.env.PORT || 5000}`,
+        description:
+          process.env.NODE_ENV === 'production'
+            ? 'Production server'
+            : 'Development server',
       },
     ],
     components: {
@@ -33,12 +43,6 @@ const options: Options = {
           scheme: 'bearer',
           bearerFormat: 'JWT',
           description: 'JWT token for authentication',
-        },
-        ApiKeyAuth: {
-          type: 'apiKey',
-          in: 'header',
-          name: 'X-API-Key',
-          description: 'API key for authentication',
         },
       },
       responses: {

@@ -35,29 +35,25 @@ export function generateOpenApiSpec(controllers: any[]): OpenApiSpec {
     },
     servers: [
       {
-        url: 'http://localhost:3000/api',
-        description: 'Development server',
-      },
-      {
-        url: 'https://api.example.com',
-        description: 'Production server',
+        url:
+          process.env.NODE_ENV === 'production'
+            ? process.env.API_URL || 'https://api.example.com'
+            : `http://localhost:${process.env.PORT || 5000}`,
+        description:
+          process.env.NODE_ENV === 'production'
+            ? 'Production server'
+            : 'Development server',
       },
     ],
     paths: {},
     components: {
       schemas: generateComponentSchemas(),
       securitySchemes: {
-        bearerAuth: {
+        BearerAuth: {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
-          description: 'JWT Bearer token authentication',
-        },
-        apiKey: {
-          type: 'apiKey',
-          in: 'header',
-          name: 'X-API-Key',
-          description: 'API Key authentication',
+          description: 'JWT token for authentication',
         },
       },
       parameters: {
@@ -119,10 +115,6 @@ export function generateOpenApiSpec(controllers: any[]): OpenApiSpec {
       },
     },
     tags: [
-      {
-        name: 'Users',
-        description: 'User management operations',
-      },
       {
         name: 'Health',
         description: 'API health check endpoints',
