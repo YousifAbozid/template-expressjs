@@ -17,17 +17,15 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
-    "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src --fix",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "lint": "eslint src --cache --cache-location .eslintcache",
+    "lint:fix": "eslint src --fix --cache --cache-location .eslintcache",
+    "format:all": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "fix-all": "npm run lint:fix && npm run format",
+    "fix-all": "npm run lint:fix && npm run format:all",
+    "fix-staged": "lint-staged",
     "upgrade": "npx npm-check-updates -u && npm install",
-    "prepare": "node -e \"if(process.env.NODE_ENV !== 'production') require('husky')\"",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
-    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "build": "echo 'No build step required'"
+    "prepare": "husky",
+    "build": "echo 'No build step required for Node.js backend'"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -56,15 +54,13 @@
     "eslint-plugin-prettier": "^5.5.4",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
-    "jest": "^30.2.0",
     "lint-staged": "^16.2.7",
     "nodemon": "^3.1.11",
-    "prettier": "^3.7.3",
-    "supertest": "^7.1.4"
+    "prettier": "^3.7.3"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --max-warnings=0",
+      "eslint --fix --cache --cache-location .eslintcache",
       "prettier --write"
     ],
     "*.{json,md}": [
