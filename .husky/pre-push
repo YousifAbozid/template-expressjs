@@ -35,7 +35,7 @@ echo "✅ Build check passed!"
 # Step 4: Validate API specification if generated
 if [ -f "src/openapi.json" ]; then
   echo "📋 Validating OpenAPI specification..."
-  npm run validate:api-spec
+  npm run api:validate
   if [ $? -ne 0 ]; then
     echo "❌ OpenAPI specification validation failed!"
     exit 1
