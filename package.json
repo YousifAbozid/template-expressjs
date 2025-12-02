@@ -11,7 +11,11 @@
     "url": "git+https://github.com/YousifAbozid/template-express-ts.git"
   },
   "license": "MIT",
-  "author": "Yousif Abozid",
+  "author": {
+    "name": "Yousif Abozid",
+    "email": "yousif.abozid@yahoo.com",
+    "url": "https://github.com/YousifAbozid"
+  },
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
