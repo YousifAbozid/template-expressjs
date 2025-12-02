@@ -1,13 +1,14 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
+import type { AppConfig } from '@/types';
 
 // Load environment variables
-dotenv.config();
+config();
 
-const config = {
+const appConfig: AppConfig = {
   env: process.env.NODE_ENV || 'development',
-  port: process.env.PORT || 5000,
+  port: parseInt(process.env.PORT || '5000', 10),
 
-  // Database config - add your database connection settings when needed
+  // Database config
   db: {
     url:
       process.env.MONGODB_URI || 'mongodb://localhost:27017/express-template',
@@ -24,4 +25,4 @@ const config = {
   },
 };
 
-export default config;
+export default appConfig;
