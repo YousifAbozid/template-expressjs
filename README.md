@@ -1,371 +1,184 @@
-# Express TypeScript API Template
+# 🚀 Express TypeScript OpenAPI Template
 
-A production-ready Express.js API template with TypeScript, OpenAPI documentation, and comprehensive developer tools for rapid API development.
+A modern, production-ready Express.js template with TypeScript, decorator-based OpenAPI/Swagger documentation, and comprehensive validation.
+
+## 📧 Support & Repository
+
+- **Email**: yousif.abozid@yahoo.com
+- **Repository**: https://github.com/YousifAbozid/template-express-ts
 
 ## ✨ Features
 
-- **TypeScript** - Full TypeScript support with strict type checking
-- **OpenAPI/Swagger** - Automatic API documentation and type generation
-- **Type Safety** - Frontend-backend type synchronization
-- **Modern Development** - Hot reload, ESLint, Prettier, Git hooks
-- **Production Ready** - Security, validation, error handling, rate limiting
-
-### Technical Stack
-
-- **Framework**: Express.js with TypeScript
-- **Documentation**: OpenAPI 3.0 with Swagger UI
-- **Database**: MongoDB with Mongoose (ready to configure)
-- **Security**: Helmet, CORS, Rate limiting, HPP protection
-- **Validation**: Custom validation utilities (extensible)
-- **Code Quality**: ESLint, Prettier, Husky, lint-staged
-- **Development**: Hot reload, source maps, path aliases
+- 🏗️ **Express.js with TypeScript** - Type-safe backend development
+- 📚 **OpenAPI 3.0 / Swagger** - Automatic API documentation generation
+- 🎨 **Decorator-based Architecture** - Clean, NestJS-inspired patterns
+- ✅ **Comprehensive Validation** - Request/response validation with class-validator
+- 🔒 **JWT Authentication** - Built-in authentication middleware
+- ⚡ **Rate Limiting** - Protection against abuse
+- 🛡️ **Security First** - Helmet, CORS, and security best practices
+- 🗃️ **Database Ready** - Configuration for your database of choice
+- 📦 **ES Modules** - Modern JavaScript module system
+- 🔧 **Developer Tools** - Hot reload, validation, type generation
 
 ## 🚀 Quick Start
 
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-- MongoDB (if using database features)
-
-### Installation
-
 ```bash
-# Clone the template
-git clone <your-repo-url>
-cd template-expressjs
-
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server with hot reload
 npm run dev
-```
 
-### Available Scripts
+# View interactive API documentation
+open http://localhost:3001/api/docs
 
-```bash
-# Development
-npm run dev          # Start with hot reload
-npm run build        # Compile TypeScript
-npm run start        # Run compiled version
-npm run type-check   # Check TypeScript types
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues
-npm run format:all   # Format with Prettier
-npm run fix-all      # Fix linting + formatting
-
-# Type Generation (when you add OpenAPI docs)
-npm run generate:types   # Generate types from OpenAPI spec
-npm run generate:client  # Generate API client
+# Generate OpenAPI specification
+npm run generate:api-spec
 ```
 
 ## 📁 Project Structure
 
 ```
 src/
-├── types/                 # TypeScript type definitions
-│   ├── index.ts          # Core application types
-│   └── schemas.ts        # OpenAPI schema definitions
-├── config/               # Configuration files
-│   ├── index.ts         # App configuration
-│   ├── db.ts            # Database connection
-│   └── swagger.ts       # OpenAPI configuration
-├── middleware/           # Express middleware
-│   ├── error.ts         # Error handling
-│   ├── rateLimiter.ts   # Rate limiting
-│   └── validator.ts     # Validation helpers
-├── routes/              # API routes
-│   └── index.ts         # Health check + route setup
-├── utils/               # Utility functions
-│   ├── response.ts      # API response helpers
-│   ├── asyncHandler.ts  # Async error handling
-│   └── validation.ts    # Validation utilities
-├── app.ts               # Express app configuration
-└── index.ts             # Server entry point
+├── controllers/     # API route handlers with decorators
+├── dto/            # Data Transfer Objects with validation
+├── enums/          # Enum definitions
+├── decorators/     # OpenAPI decorators (@ApiProperty, etc.)
+├── middleware/     # Express middleware (validation, auth)
+├── routes/         # Route registration
+├── swagger/        # OpenAPI specification generation
+├── config/         # Configuration files (DB, Swagger)
+├── utils/          # Utility functions
+└── types/          # TypeScript type definitions
 ```
 
-## 📖 API Documentation
+## 🛠️ Available Scripts
 
-Once running, visit:
+```bash
+npm run dev                    # Development server with hot reload
+npm run build                  # Build for production
+npm start                     # Start production server
+npm run generate:api-spec      # Generate OpenAPI spec from decorators
+npm run validate:api-spec      # Validate generated specification
+npm run generate:types         # Generate TypeScript types from schema
+npm run generate:client        # Generate API client from schema
+npm run api:generate-all       # Generate all (spec + types + client)
+```
 
-- **API Documentation**: `http://localhost:5000/api/docs`
-- **Health Check**: `http://localhost:5000/api/health`
+## 📖 Getting Started
 
-## 🛠️ Development Guide
+1. **Clone the template**:
 
-### Adding New Routes
+   ```bash
+   git clone https://github.com/YousifAbozid/template-express-ts.git
+   cd template-express-ts
+   npm install
+   ```
 
-1. **Create route file** in `src/routes/`:
+2. **Start development**:
+
+   ```bash
+   npm run dev
+   ```
+
+3. **Implement your features**:
+   - Follow the [Implementation Guide](./IMPLEMENTATION_GUIDE.md) for step-by-step instructions
+   - See examples in the guide for creating controllers, DTOs, and routes
+
+4. **View your API**:
+   - Interactive docs: `http://localhost:3001/api/docs`
+   - Raw OpenAPI spec: `http://localhost:3001/api/docs.json`
+
+## 🎯 Key Features Explained
+
+### Decorator-Based Documentation
 
 ```typescript
-// src/routes/users.ts
-import { Router } from 'express';
-import { asyncHandler } from '@/utils/asyncHandler';
-import { sendSuccess } from '@/utils/response';
-
-const router = Router();
-
-/**
- * @openapi
- * /api/users:
- *   get:
- *     summary: Get users
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Success
- */
-router.get(
-  '/',
-  asyncHandler(async (req, res) => {
-    sendSuccess(res, [], 'Users retrieved');
-  })
-);
-
-export default router;
-```
-
-2. **Register route** in `src/routes/index.ts`:
-
-```typescript
-import userRoutes from './users.js';
-router.use('/users', userRoutes);
-```
-
-### Adding Types
-
-Define types in `src/types/index.ts`:
-
-```typescript
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: Date;
-}
-```
-
-### OpenAPI Documentation
-
-Document APIs with JSDoc comments:
-
-```typescript
-/**
- * @openapi
- * /api/users/{id}:
- *   get:
- *     summary: Get user by ID
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: User details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/User'
- */
-```
-
-### Error Handling
-
-Use the async handler for automatic error catching:
-
-```typescript
-import { asyncHandler } from '@/utils/asyncHandler';
-import { createApiError } from '@/utils/response';
-
-router.get(
-  '/users/:id',
-  asyncHandler(async (req, res) => {
-    const user = await findUser(req.params.id);
-    if (!user) {
-      throw createApiError('User not found', 404);
-    }
-    sendSuccess(res, user);
-  })
-);
-```
-
-### Validation
-
-Use built-in validation utilities:
-
-```typescript
-import { validateRequiredString, validateEmail } from '@/utils/validation';
-
-const nameValidation = validateRequiredString(req.body.name, 'name', 2, 50);
-if (!nameValidation.isValid) {
-  throw createApiError(nameValidation.error!, 400);
-}
-```
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create `.env` file:
-
-```env
-NODE_ENV=development
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/your-db
-SESSION_SECRET=your-session-secret
-CORS_ORIGIN=*
-```
-
-### TypeScript Configuration
-
-The project uses strict TypeScript settings. Modify `tsconfig.json` for your needs:
-
-- Path aliases (`@/types`, `@/utils`, etc.)
-- Strict type checking enabled
-- Source maps for debugging
-- Declaration files generation
-
-### Database Setup
-
-Configure MongoDB connection in `src/config/db.ts`:
-
-```typescript
-const connectDB = async (): Promise<void> => {
-  try {
-    await mongoose.connect(config.db.url);
-    console.log('MongoDB Connected');
-  } catch (error) {
-    console.error('Database connection error:', error);
-    process.exit(1);
+@ApiTags('Products')
+@Controller('/products')
+export class ProductController {
+  @Get('/')
+  @ApiOperation({ summary: 'Get all products' })
+  @ApiOkResponse({ type: ProductPaginationResponseDto })
+  async getProducts() {
+    // Implementation
   }
-};
+}
 ```
 
-## 🔄 Type Generation & Frontend Integration
-
-### Generate Types from API
-
-```bash
-# Generate TypeScript types from OpenAPI spec
-npm run generate:types
-
-# Generate complete API client for frontend
-npm run generate:client
-```
-
-### Frontend Integration
-
-1. **Share types** with frontend team
-2. **Use generated client** in React/Vue/Angular apps
-3. **Maintain type sync** automatically through CI/CD
-
-Example frontend usage:
+### Automatic Validation
 
 ```typescript
-import type { User } from './types/api';
-import { ApiClient } from './types/client';
+export class CreateProductDto {
+  @ApiProperty({ example: 'iPhone 15' })
+  @IsString()
+  @Length(1, 200)
+  name: string;
 
-const client = new ApiClient('http://localhost:5000');
-const users: User[] = await client.getUsers();
+  @ApiProperty({ example: 999.99 })
+  @IsNumber()
+  @Min(0)
+  price: number;
+}
 ```
 
-## 🚦 Best Practices
-
-### API Responses
-
-Always use response utilities:
+### Type-Safe Responses
 
 ```typescript
-// Success
-sendSuccess(res, data, 'Operation successful');
+export class ProductResponseDto {
+  @ApiProperty({ example: 'prod_123' })
+  id: string;
 
-// Error
-sendError(res, 'Error message', 400);
+  @ApiProperty({ example: 'iPhone 15' })
+  name: string;
 
-// Paginated
-sendPaginated(res, items, page, limit, total);
+  // Automatic OpenAPI schema generation
+}
 ```
 
-### Rate Limiting
+## 📋 Implementation Guide
 
-Apply appropriate limits:
+This template includes a comprehensive [Implementation Guide](./IMPLEMENTATION_GUIDE.md) that shows you how to:
 
-```typescript
-import { strictLimiter, createRateLimiter } from '@/middleware/rateLimiter';
+- ✅ Create new controllers with decorators
+- ✅ Build DTOs with validation
+- ✅ Set up routes with middleware
+- ✅ Generate OpenAPI documentation
+- ✅ Handle authentication & authorization
+- ✅ Implement pagination & filtering
+- ✅ Follow best practices
 
-// Sensitive endpoints
-router.post('/auth/login', strictLimiter, ...);
+## 🔒 Security Features
 
-// Custom limits
-const uploadLimiter = createRateLimiter(60000, 5); // 5 per minute
-```
+- **Helmet.js** - Security headers
+- **CORS** - Cross-origin resource sharing
+- **Rate Limiting** - Request throttling
+- **JWT Authentication** - Secure token-based auth
+- **Input Validation** - Comprehensive request validation
+- **Error Handling** - Safe error responses
 
-### Error Handling
+## 🌐 API Documentation
 
-Create meaningful errors:
+The template automatically generates beautiful, interactive API documentation accessible at `/api/docs` when the server is running. Features include:
 
-```typescript
-throw createApiError('Resource not found', 404, [
-  { field: 'id', message: 'Invalid user ID format' },
-]);
-```
+- **Interactive testing** - Test endpoints directly from the browser
+- **Schema visualization** - See request/response structures
+- **Authentication support** - Test protected endpoints
+- **Example values** - Real examples for all fields
+- **Export options** - Download OpenAPI spec
 
-## 📈 Production Deployment
+## 💡 Why This Template?
 
-### Build for Production
+This template bridges the gap between Express.js simplicity and NestJS power by providing:
 
-```bash
-npm run build
-npm start
-```
+1. **Familiar Express patterns** with enhanced developer experience
+2. **Automatic documentation** that stays in sync with your code
+3. **Type safety** throughout the request/response cycle
+4. **Industry best practices** built-in from day one
+5. **Scalable architecture** that grows with your application
 
-### Environment Setup
-
-- Set `NODE_ENV=production`
-- Configure secure session secrets
-- Set up proper CORS origins
-- Configure database connection pooling
-- Set up monitoring and logging
-
-### Docker (Optional)
-
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY dist ./dist
-EXPOSE 5000
-CMD ["npm", "start"]
-```
-
-## 🤝 Contributing
-
-1. **Read** `src/README.md` for detailed development guide
-2. **Follow** TypeScript strict mode guidelines
-3. **Document** APIs with OpenAPI comments
-4. **Test** with provided utilities
-5. **Maintain** type safety throughout
-
-## 📝 Developer Resources
-
-- **Detailed Guide**: `src/README.md` - Comprehensive development documentation
-- **API Docs**: `/api/docs` - Interactive OpenAPI documentation
-- **Health Check**: `/api/health` - Service status endpoint
-- **TypeScript**: [typescript-lang.org](https://www.typescriptlang.org/)
-- **OpenAPI**: [swagger.io/specification](https://swagger.io/specification/)
-
-## 📄 License
-
-MIT License - see LICENSE file for details.
+Perfect for building APIs that need to be well-documented, type-safe, and maintainable!
 
 ---
 
-**Happy coding!** 🚀 This template provides everything you need to build scalable, type-safe APIs quickly.
-
-For questions or issues, refer to the detailed documentation in `src/README.md`.
+**Ready to build amazing APIs?** Check out the [Implementation Guide](./IMPLEMENTATION_GUIDE.md) and start coding! 🎯

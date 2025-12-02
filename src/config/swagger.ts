@@ -1,6 +1,7 @@
 import swaggerJsdoc from 'swagger-jsdoc';
 import type { Options } from 'swagger-jsdoc';
 import { CommonSchemas } from '@/types/schemas.js';
+import { generateOpenApiSpec } from '@/swagger/index.js';
 
 const options: Options = {
   definition: {
@@ -12,7 +13,8 @@ const options: Options = {
         'A modern Express.js API template with TypeScript and OpenAPI',
       contact: {
         name: 'API Support',
-        email: 'support@example.com',
+        email: 'yousif.abozid@yahoo.com',
+        url: 'https://github.com/YousifAbozid/template-express-ts',
       },
     },
     servers: [
@@ -71,12 +73,46 @@ const options: Options = {
         name: 'Health',
         description: 'Health check endpoints',
       },
-      // Add more tags as you add features
     ],
   },
   apis: ['./src/routes/*.ts', './src/routes/**/*.ts', './src/types/schemas.ts'],
 };
 
-const specs = swaggerJsdoc(options);
+// Generate the traditional swagger spec
+const swaggerSpec = swaggerJsdoc(options) as any;
 
-export default specs;
+// Generate the enhanced OpenAPI spec from our decorators
+const controllers: any[] = []; // Add your controllers here
+const enhancedSpec = generateOpenApiSpec(controllers);
+
+// Merge both specs, prioritizing enhanced spec for paths and components
+const mergedSpec = {
+  ...swaggerSpec,
+  ...enhancedSpec,
+  paths: {
+    ...swaggerSpec.paths,
+    ...enhancedSpec.paths,
+  },
+  components: {
+    ...swaggerSpec.components,
+    schemas: {
+      ...swaggerSpec.components?.schemas,
+      ...enhancedSpec.components.schemas,
+    },
+    securitySchemes: {
+      ...swaggerSpec.components?.securitySchemes,
+      ...enhancedSpec.components.securitySchemes,
+    },
+    parameters: {
+      ...swaggerSpec.components?.parameters,
+      ...enhancedSpec.components.parameters,
+    },
+    responses: {
+      ...swaggerSpec.components?.responses,
+      ...enhancedSpec.components.responses,
+    },
+  },
+  tags: [...(swaggerSpec.tags || []), ...(enhancedSpec.tags || [])],
+};
+
+export default mergedSpec;
