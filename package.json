@@ -25,7 +25,7 @@
     "generate:client": "swagger-typescript-api generate -p ./src/openapi.json -o ./src/types -n client.ts --no-client",
     "validate:api-spec": "tsx scripts/validate-openapi-spec.ts",
     "docs:serve": "swagger-ui-serve ./src/openapi.json",
-    "lint": "eslint src --cache --cache-location .eslintcache --no-warn-ignored",
+    "lint": "eslint src --cache --cache-location .eslintcache",
     "lint:fix": "eslint src --fix --cache --cache-location .eslintcache",
     "format:all": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
