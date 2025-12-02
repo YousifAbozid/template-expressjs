@@ -17,7 +17,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "start": "node dist/index.js",
-    "build": "npm run clean && tsc && npm run api:generate",
+    "build": "npm run clean && tsc && tsc-alias && npm run api:generate",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
     "api:generate": "npm run api:spec && npm run api:types && npm run api:client",
@@ -72,6 +72,7 @@
     "openapi-typescript": "^7.10.1",
     "prettier": "^3.7.3",
     "swagger-typescript-api": "^13.2.16",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
