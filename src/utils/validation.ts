@@ -2,7 +2,7 @@ import type { Request } from 'express';
 
 /**
  * Simple validation helpers
- * Note: In a production app, you would use express-validator or similar
+ * Note: The main validation is handled by class-validator in the middleware
  */
 
 /**
