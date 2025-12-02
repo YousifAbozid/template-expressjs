@@ -21,7 +21,7 @@ export function generateOpenApiSpec(controllers: any[]): OpenApiSpec {
     info: {
       title: 'Express TypeScript API',
       description:
-        'A comprehensive Express.js API with TypeScript and OpenAPI documentation',
+        '✨ A modern, production-ready Express.js template with TypeScript, decorator-based OpenAPI/Swagger documentation, comprehensive validation and developer tooling (ESLint/Prettier/Husky). Ready for production deployment with optimized architecture 🚀',
       version: '1.0.0',
       contact: {
         name: 'API Support',

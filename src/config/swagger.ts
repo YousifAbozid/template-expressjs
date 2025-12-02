@@ -14,7 +14,7 @@ const options: Options = {
       title: 'Express TypeScript API',
       version: '1.0.0',
       description:
-        'A modern Express.js API template with TypeScript and OpenAPI',
+        '✨ A modern, production-ready Express.js template with TypeScript, decorator-based OpenAPI/Swagger documentation, comprehensive validation and developer tooling (ESLint/Prettier/Husky). Ready for production deployment with optimized architecture 🚀',
       contact: {
         name: 'API Support',
         email: 'yousif.abozid@yahoo.com',

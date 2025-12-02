@@ -1,7 +1,7 @@
 {
   "name": "template-express-ts",
   "version": "1.0.0",
-  "description": "A production-ready Express.js template",
+  "description": "✨ A modern, production-ready Express.js template with TypeScript, decorator-based OpenAPI/Swagger documentation, comprehensive validation and developer tooling (ESLint/Prettier/Husky). Ready for production deployment with optimized architecture 🚀",
   "homepage": "https://github.com/YousifAbozid/template-express-ts#readme",
   "bugs": {
     "url": "https://github.com/YousifAbozid/template-express-ts/issues"
