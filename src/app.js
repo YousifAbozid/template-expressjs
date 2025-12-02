@@ -3,14 +3,12 @@ import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
 import session from 'express-session';
-import passport from 'passport';
 import swaggerUi from 'swagger-ui-express';
 import hpp from 'hpp'; // Add HPP import
 
 import { notFound, errorHandler } from './middleware/error.js';
 import { globalLimiter } from './middleware/rateLimiter.js';
 import routes from './routes/index.js';
-import './config/passport.js';
 import config from './config/index.js';
 import swaggerSpec from './config/swagger.js';
 
@@ -39,10 +37,6 @@ app.use(
     },
   })
 );
-
-// Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Swagger documentation
 app.use(
