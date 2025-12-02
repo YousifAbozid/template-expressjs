@@ -31,10 +31,9 @@ npm run dev
 
 # View interactive API documentation
 open http://localhost:3001/api/docs
-
-# Generate OpenAPI specification
-npm run generate:api-spec
 ```
+
+> 📋 **New to this template?** Check out the [Development Workflow Guide](./WORKFLOW.md) to understand which scripts to use for different tasks.
 
 ## 📁 Project Structure
 

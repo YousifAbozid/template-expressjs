@@ -14,7 +14,7 @@ npx lint-staged --verbose || {
   echo "❌ lint-staged failed. Issues found:"
   echo "   • ESLint or Prettier errors in staged files"
   echo "   • Please fix the issues above and try committing again."
-  echo "   • You can run 'npm run fix-staged' to auto-fix some issues"
+  echo "   • You can run 'npm run fix' to auto-fix some issues"
   exit 1
 }
 

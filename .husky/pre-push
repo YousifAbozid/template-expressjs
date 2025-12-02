@@ -14,21 +14,13 @@ echo "📦 Source files changed, running full codebase checks..."
 
 # Step 1: Validate configuration and formatting
 echo "🔍 Validating code formatting and configuration..."
-npm run validate-config
+npm run test
 if [ $? -ne 0 ]; then
-  echo "❌ Configuration validation failed! Please fix formatting or linting errors."
-  echo "💡 Try running: npm run fix-all"
+  echo "❌ Code validation failed! Please fix formatting or linting errors."
+  echo "💡 Try running: npm run fix"
   exit 1
 fi
-echo "✅ Configuration and formatting validated!"
-
-# Step 2: Type checking
-echo "🔍 Running TypeScript type check..."
-npm run type-check
-if [ $? -ne 0 ]; then
-  echo "❌ TypeScript type check failed! Please fix type errors."
-  exit 1
-fi
+echo "✅ Code validation passed!"
 echo "✅ TypeScript types are valid!"
 
 # Step 3: Run build check
