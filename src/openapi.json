@@ -63,7 +63,12 @@
             "example": "/api/users"
           }
         },
-        "required": ["message", "code", "statusCode", "timestamp"]
+        "required": [
+          "message",
+          "code",
+          "statusCode",
+          "timestamp"
+        ]
       },
       "ValidationErrorDto": {
         "type": "object",
@@ -86,7 +91,10 @@
             "example": "invalid-email"
           }
         },
-        "required": ["field", "constraints"]
+        "required": [
+          "field",
+          "constraints"
+        ]
       },
       "SuccessResponseDto": {
         "type": "object",
@@ -110,7 +118,11 @@
             "example": "2024-01-01T00:00:00.000Z"
           }
         },
-        "required": ["success", "message", "timestamp"]
+        "required": [
+          "success",
+          "message",
+          "timestamp"
+        ]
       },
       "PaginationQueryDto": {
         "type": "object",

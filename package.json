@@ -93,7 +93,7 @@
       "eslint --fix --cache --cache-location .eslintcache --no-warn-ignored",
       "prettier --write"
     ],
-    "*.{json,md,yml,yaml}": [
+    "!(src/openapi.json|src/types/api.ts|src/types/client.ts)*.{json,md,yml,yaml}": [
       "prettier --write"
     ],
     "*.{css,scss,less}": [
