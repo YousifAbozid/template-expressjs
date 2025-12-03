@@ -52,7 +52,6 @@
     "hpp": "^0.2.3",
     "mongoose": "^9.0.0",
     "reflect-metadata": "^0.2.2",
-    "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
@@ -65,7 +64,6 @@
     "@types/hpp": "^0.2.7",
     "@types/node": "^24.10.1",
     "@types/reflect-metadata": "^0.1.0",
-    "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^8.48.1",
     "@typescript-eslint/parser": "^8.48.1",
@@ -74,7 +72,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "openapi-typescript": "^7.10.1",
-    "prettier": "^3.7.3",
+    "prettier": "^3.7.4",
     "swagger-typescript-api": "^13.2.16",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
