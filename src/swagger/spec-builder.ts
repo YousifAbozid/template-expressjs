@@ -38,7 +38,7 @@ export function generateOpenApiSpec(controllers: any[]): OpenApiSpec {
         url:
           process.env.NODE_ENV === 'production'
             ? process.env.API_URL || 'https://api.example.com'
-            : `http://localhost:${process.env.PORT || 5000}`,
+            : `http://localhost:${process.env.PORT || 5000}/api`,
         description:
           process.env.NODE_ENV === 'production'
             ? 'Production server'

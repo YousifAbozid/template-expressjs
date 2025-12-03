@@ -1,5 +1,5 @@
 import { config } from 'dotenv';
-import type { AppConfig } from '@/types';
+import type { AppConfig } from '@/types/index.js';
 
 // Load environment variables
 config();

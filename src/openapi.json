@@ -16,88 +16,37 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000",
+      "url": "http://localhost:5000/api",
       "description": "Development server"
     }
   ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check endpoint",
+        "description": "Returns the current status and uptime of the API server",
+        "tags": [
+          "Health"
+        ],
+        "responses": {
+          "200": {
+            "description": "API is operational"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          },
+          "503": {
+            "description": "Service unavailable"
+          }
+        }
+      }
+    }
+  },
   "components": {
     "schemas": {
-      "Error400": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": false
-          },
-          "message": {
-            "type": "string",
-            "example": "Bad Request"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "field": {
-                  "type": "string",
-                  "example": "email"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "Invalid email format"
-                }
-              }
-            }
-          }
-        }
-      },
-      "Error404": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": false
-          },
-          "message": {
-            "type": "string",
-            "example": "Resource not found"
-          }
-        }
-      },
-      "Error500": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": false
-          },
-          "message": {
-            "type": "string",
-            "example": "Internal server error"
-          }
-        }
-      },
-      "HealthCheck": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "ok"
-          },
-          "uptime": {
-            "type": "number",
-            "example": 123.45
-          },
-          "timestamp": {
-            "type": "string",
-            "example": "2025-12-02T10:30:00.000Z"
-          },
-          "environment": {
-            "type": "string",
-            "example": "development"
-          }
-        }
-      },
       "ErrorResponseDto": {
         "type": "object",
         "properties": {
@@ -222,58 +171,6 @@
         "description": "JWT token for authentication"
       }
     },
-    "responses": {
-      "BadRequest": {
-        "description": "Bad Request",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseDto"
-            }
-          }
-        }
-      },
-      "NotFound": {
-        "description": "Not Found",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseDto"
-            }
-          }
-        }
-      },
-      "InternalError": {
-        "description": "Internal server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/Error500"
-            }
-          }
-        }
-      },
-      "Unauthorized": {
-        "description": "Unauthorized",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseDto"
-            }
-          }
-        }
-      },
-      "InternalServerError": {
-        "description": "Internal Server Error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ErrorResponseDto"
-            }
-          }
-        }
-      }
-    },
     "parameters": {
       "PageParameter": {
         "name": "page",
@@ -296,55 +193,54 @@
           "maximum": 100
         }
       }
-    }
-  },
-  "tags": [
-    {
-      "name": "Health",
-      "description": "Health check endpoints"
     },
-    {
-      "name": "Health",
-      "description": "API health check endpoints"
-    }
-  ],
-  "paths": {
-    "/api/health": {
-      "get": {
-        "summary": "Health check endpoint",
-        "description": "Returns the current status and uptime of the API server",
-        "tags": [
-          "Health"
-        ],
-        "responses": {
-          "200": {
-            "description": "API is operational",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HealthCheck"
-                },
-                "example": {
-                  "status": "ok",
-                  "uptime": 123.45,
-                  "timestamp": "2025-12-02T10:30:00.000Z",
-                  "environment": "development"
-                }
-              }
+    "responses": {
+      "BadRequest": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseDto"
             }
-          },
-          "503": {
-            "description": "Service unavailable",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error500"
-                }
-              }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseDto"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseDto"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponseDto"
             }
           }
         }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Health",
+      "description": "API health check endpoints"
+    }
+  ]
 }

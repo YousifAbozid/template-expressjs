@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/health": {
+    "/health": {
         parameters: {
             query?: never;
             header?: never;
@@ -29,26 +29,16 @@ export interface paths {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content: {
-                        /**
-                         * @example {
-                         *       "status": "ok",
-                         *       "uptime": 123.45,
-                         *       "timestamp": "2025-12-02T10:30:00.000Z",
-                         *       "environment": "development"
-                         *     }
-                         */
-                        "application/json": components["schemas"]["HealthCheck"];
-                    };
+                    content?: never;
                 };
+                400: components["responses"]["BadRequest"];
+                500: components["responses"]["InternalServerError"];
                 /** @description Service unavailable */
                 503: {
                     headers: {
                         [name: string]: unknown;
                     };
-                    content: {
-                        "application/json": components["schemas"]["Error500"];
-                    };
+                    content?: never;
                 };
             };
         };
@@ -64,40 +54,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        Error400: {
-            /** @example false */
-            success?: boolean;
-            /** @example Bad Request */
-            message?: string;
-            errors?: {
-                /** @example email */
-                field?: string;
-                /** @example Invalid email format */
-                message?: string;
-            }[];
-        };
-        Error404: {
-            /** @example false */
-            success?: boolean;
-            /** @example Resource not found */
-            message?: string;
-        };
-        Error500: {
-            /** @example false */
-            success?: boolean;
-            /** @example Internal server error */
-            message?: string;
-        };
-        HealthCheck: {
-            /** @example ok */
-            status?: string;
-            /** @example 123.45 */
-            uptime?: number;
-            /** @example 2025-12-02T10:30:00.000Z */
-            timestamp?: string;
-            /** @example development */
-            environment?: string;
-        };
         ErrorResponseDto: {
             /**
              * @description Error message
@@ -188,8 +144,8 @@ export interface components {
                 "application/json": components["schemas"]["ErrorResponseDto"];
             };
         };
-        /** @description Not Found */
-        NotFound: {
+        /** @description Unauthorized */
+        Unauthorized: {
             headers: {
                 [name: string]: unknown;
             };
@@ -197,17 +153,8 @@ export interface components {
                 "application/json": components["schemas"]["ErrorResponseDto"];
             };
         };
-        /** @description Internal server error */
-        InternalError: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": components["schemas"]["Error500"];
-            };
-        };
-        /** @description Unauthorized */
-        Unauthorized: {
+        /** @description Not Found */
+        NotFound: {
             headers: {
                 [name: string]: unknown;
             };

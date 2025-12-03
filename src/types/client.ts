@@ -10,44 +10,6 @@
  * ---------------------------------------------------------------
  */
 
-export interface Error400 {
-  /** @example false */
-  success?: boolean;
-  /** @example "Bad Request" */
-  message?: string;
-  errors?: {
-    /** @example "email" */
-    field?: string;
-    /** @example "Invalid email format" */
-    message?: string;
-  }[];
-}
-
-export interface Error404 {
-  /** @example false */
-  success?: boolean;
-  /** @example "Resource not found" */
-  message?: string;
-}
-
-export interface Error500 {
-  /** @example false */
-  success?: boolean;
-  /** @example "Internal server error" */
-  message?: string;
-}
-
-export interface HealthCheck {
-  /** @example "ok" */
-  status?: string;
-  /** @example 123.45 */
-  uptime?: number;
-  /** @example "2025-12-02T10:30:00.000Z" */
-  timestamp?: string;
-  /** @example "development" */
-  environment?: string;
-}
-
 export interface ErrorResponseDto {
   /**
    * Error message

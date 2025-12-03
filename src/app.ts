@@ -11,10 +11,15 @@ import { notFound, errorHandler } from '@/middleware/error.js';
 import { globalLimiter } from '@/middleware/rateLimiter.js';
 import routes from '@/routes/index.js';
 import config from '@/config/index.js';
-import swaggerSpec from '@/config/swagger.js';
+import { HealthController } from './controllers/index.js';
+import { generateOpenApiSpec } from './swagger/index.js';
 
 // Initialize express app
 const app: Application = express();
+
+// Generate OpenAPI spec directly
+const controllers = [HealthController];
+const swaggerSpec = generateOpenApiSpec(controllers);
 
 // Trust proxy (important for rate limiting and IP detection)
 app.set('trust proxy', 1);

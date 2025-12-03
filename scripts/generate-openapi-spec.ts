@@ -8,9 +8,8 @@ import { fileURLToPath } from 'url';
 // Load environment variables
 dotenv.config();
 
-import swaggerConfig from '../src/config/swagger.js';
-// Import your controllers here if you have any
-// Example: import { UserController } from '../src/controllers/index.js';
+import { generateOpenApiSpec } from '../src/swagger/index.js';
+import { HealthController } from '../src/controllers/health.controller.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,8 +18,9 @@ async function generateSpec() {
   try {
     console.log('🚀 Generating OpenAPI specification...');
 
-    // Use the merged swagger configuration
-    const spec = swaggerConfig;
+    // Generate spec directly from controllers
+    const controllers = [HealthController];
+    const spec = generateOpenApiSpec(controllers);
 
     // Ensure the output directory exists
     const outputDir = path.join(__dirname, '..', 'dist');
@@ -43,11 +43,15 @@ async function generateSpec() {
 
     // Log some statistics
     const pathCount = Object.keys(spec.paths).length;
-    const schemaCount = Object.keys(spec.components.schemas).length;
+    const schemaCount = Object.keys(spec.components?.schemas || {}).length;
+    const tagCount = spec.tags?.length || 0;
+    const controllerCount = controllers.length;
 
     console.log(`📊 Statistics:`);
     console.log(`   - ${pathCount} API paths`);
     console.log(`   - ${schemaCount} schema definitions`);
+    console.log(`   - ${tagCount} API tags`);
+    console.log(`   - ${controllerCount} controllers processed`);
     console.log(`   - Using JSDoc + Decorators for API documentation`);
   } catch (error) {
     console.error('❌ Error generating OpenAPI specification:', error);

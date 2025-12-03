@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import type { ApiError } from '@/types';
+import type { ApiError } from '@/types/index.js';
 import { ErrorResponseDto, ValidationErrorDto } from '@/dto/common/index.js';
 
 /**

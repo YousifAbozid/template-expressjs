@@ -118,3 +118,16 @@ export function ApiInternalServerErrorResponse(
     description: options.description || 'Internal Server Error',
   });
 }
+
+/**
+ * Decorator for 503 Service Unavailable responses
+ */
+export function ApiServiceUnavailableResponse(
+  options: Omit<ApiResponseOptions, 'status'> = {}
+) {
+  return ApiResponse({
+    ...options,
+    status: 503,
+    description: options.description || 'Service Unavailable',
+  });
+}
